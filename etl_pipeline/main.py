@@ -1,14 +1,24 @@
-# This is the main script where you will orchestrate the ETL process, feel free to completely modify the files/structure as you see fit.
-if __name__ == "__main__":
+﻿from api_client import fetch_posts, fetch_users
+from transform_data import transform_data
+from load_to_database import load_data
+
+
+def main():
     print("ETL Job Started")
 
-    # Extract phase
-    # TODO: Implement data extraction logic
+    posts = fetch_posts()
+    users = fetch_users()
 
-    # Transform phase
-    # TODO: Implement data transformation logic
+    print(f"Posts fetched: {len(posts)}")
+    print(f"Users fetched: {len(users)}")
 
-    # Load phase
-    # TODO: Implement data loading logic
+    transformed_posts = transform_data(posts, users)
+    print(f"Posts transformed: {len(transformed_posts)}")
+
+    load_data(transformed_posts)
 
     print("ETL Job Finished")
+
+
+if __name__ == "__main__":
+    main()
